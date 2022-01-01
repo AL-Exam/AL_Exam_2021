@@ -66,3 +66,4 @@ unique_ptr<T> make_unique( std::size_t size){
 }
 
 #endif //EXAM_UNIQUE_PTR_H
+
