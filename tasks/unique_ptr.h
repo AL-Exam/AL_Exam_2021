@@ -5,19 +5,17 @@
 #ifndef EXAM_UNIQUE_PTR_H
 #define EXAM_UNIQUE_PTR_H
 
+#include <cstdlib>
+
 template <class T>
 class unique_ptr {
     T* _data;
 public:
-    unique_ptr(){
-        _data = nullptr;
-    }
+    unique_ptr(): _data(nullptr){}
     ~unique_ptr(){
         delete _data;
     }
-    explicit unique_ptr(T* ptr){
-        _data = ptr;
-    }
+    explicit unique_ptr(T* ptr): _data(ptr){}
     unique_ptr(unique_ptr<T>&& other) noexcept {
         _data = other._data;
         other._data = nullptr;
@@ -58,11 +56,6 @@ public:
 template<class T, class... Args >
 unique_ptr<T> make_unique( Args&&... args ){
     return unique_ptr<T>(new T(args...));
-}
-
-template< class T > // возможно, эта реализация лишняя и достаточно лишь верхней
-unique_ptr<T> make_unique( std::size_t size){
-    return unique_ptr<T>(new T [size]);
 }
 
 #endif //EXAM_UNIQUE_PTR_H
