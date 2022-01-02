@@ -14,8 +14,8 @@ class SafeQueue {
   std::mutex mutex;
  public:
   T Pop(){
-    T temp = _data.front();
     mutex.lock();
+    T temp = _data.front();
     _data.pop();
     mutex.unlock();
   }
