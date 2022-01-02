@@ -16,11 +16,10 @@ public:
         delete _data;
     }
     explicit unique_ptr(T* ptr): _data(ptr){}
-    unique_ptr(unique_ptr<T>&& other) noexcept {
-        _data = other._data;
+    unique_ptr(unique_ptr<T>&& other) noexcept: _data(other._data) {
         other._data = nullptr;
     }
-    unique_ptr<T>& operator=(unique_ptr<T>&& other) noexcept {
+    unique_ptr<T>& operator=(unique_ptr<T>&& other) noexcept{
         _data = other._data;
         other._data = nullptr;
         return *this;
