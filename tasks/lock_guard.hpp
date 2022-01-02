@@ -4,16 +4,19 @@
 
 // Аккуратно, очень сложное задание)))
 template <class Mutex>
-class LockGuard {
+class lock_guard {
  public:
-  explicit LockGuard(Mutex& m) : mutex_(m) { mutex_.lock(); }
-  LockGuard(Mutex& m, std::adopt_lock_t t) : mutex_(m) {}
-  ~LockGuard() { mutex_.unlock(); }
+  explicit lock_guard(Mutex& m) : mutex_(m) { mutex_.lock(); }
+  // Предполагает, что текущий поток уже захватил non-shared мьютекс
+  lock_guard(Mutex& m, std::adopt_lock_t t) : mutex_(m) {}
+  ~lock_guard() { mutex_.unlock(); }
 
-  LockGuard(const LockGuard&) = delete;
-  LockGuard& operator=(const LockGuard&) = delete;
+  lock_guard(const lock_guard&) = delete;
+  lock_guard& operator=(const lock_guard&) = delete;
 
  private:
+  // Ссылочный тип данных удаляет конструктор по умолчанию!
+  // В этом классе он нам и не нужен
   Mutex& mutex_;
 };
 
