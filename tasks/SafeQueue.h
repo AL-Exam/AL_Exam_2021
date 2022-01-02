@@ -25,7 +25,14 @@ class SafeQueue {
     mutex.unlock();
   }
   bool TryPop(T& value){
-    return mutex.try_lock();
+    if(mutex.try_lock()){
+      value = _data.front();
+      _data.pop();
+      mutex.unlock();
+      return true;
+    } else {
+      return false;
+    }
   }
 };
 
