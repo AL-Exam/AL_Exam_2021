@@ -6,6 +6,7 @@
 #define EXAM_VECTOR_H
 
 #include <cstdlib>
+#include <stdexcept>
 
 template <class T>
 class vector{
