@@ -25,6 +25,7 @@ public:
     
     bool TryPop(T& value) {
     if(_mutex.try_lock()) {
+        value = _stack.top();
         _stack.pop();
         mutex.unlock();
         return true;
