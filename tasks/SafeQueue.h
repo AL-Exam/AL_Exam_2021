@@ -27,7 +27,7 @@ class SafeQueue {
   }
   bool TryPop(T& value){
     if(mutex.try_lock()){
-      //value = _data.front(); мне кажется, что это лишнее, т.к. значение нам не нужно
+      value = _data.front();
       _data.pop();
       mutex.unlock();
       return true;
