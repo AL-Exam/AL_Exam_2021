@@ -28,7 +28,7 @@ class LockFreeStack
     void Push(const T& data) {
         node<T>* new_node = new node<T>(data);
         new_node->next = head.load(std::memory_order_relaxed); 
-        while(!head.compare_exchange_weak(new_node->next, new_node,
+        while (!head.compare_exchange_weak (new_node->next, new_node,
                                         std::memory_order_release,
                                         std::memory_order_relaxed));
     }
