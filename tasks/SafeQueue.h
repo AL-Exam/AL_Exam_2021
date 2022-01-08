@@ -18,6 +18,7 @@ class SafeQueue {
     T temp = _data.front();
     _data.pop();
     mutex.unlock();
+    return temp;
   }
   void Push(const T& value){
     mutex.lock();
