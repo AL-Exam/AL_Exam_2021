@@ -33,8 +33,6 @@ class LockFreeStack
                                         std::memory_order_relaxed));
     }
     
-    // in process
-    
     bool TryPop(T& value) {
         Node* old_head = head.load(std::memory_order_relaxed);
         while (old.head && !head.compare_exchange_weak (old_head, old_head -> next,
@@ -42,10 +40,11 @@ class LockFreeStack
                                                         std::memory_order_relaxed));
         if (!old_head){
             return false;
+        } else {
+            value = old_head -> data;
+            delete old_head;
+            return true;
         }
-        value = old_head -> data;
-        delete old_head;
-        return true;
     }
 
 };
