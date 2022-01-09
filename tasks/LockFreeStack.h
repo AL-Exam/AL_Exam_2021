@@ -33,12 +33,17 @@ class LockFreeStack
                                         std::memory_order_relaxed));
     }
     
+    // in process
+    
     bool TryPop(T& value) {
         Node* old_head = head.load(std::memory_order_relaxed);
         while (old.head && !head.compare_exchange_weak (old_head, old_head -> next,
                                                         std::memory_order_relaese,
                                                         std::memory_order_relaxed));
-        return old_head ? true : false;
+        bool result = old_head ? true : false;
+        value = old_head -> data;
+        delete old_head;
+        return result;
     }
 
 };
