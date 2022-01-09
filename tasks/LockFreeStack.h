@@ -23,7 +23,7 @@ class LockFreeStack
         // и другие потоки могли видеть данную атомарную переменную
       
         // compare_exchange_weak побитово сравнивает lhs и rhs и меняет
-        // lhs на rhs только когда они побитово равны
+        // lhs на des только когда lhs и rhs побитово равны
     
     void Push(const T& data) {
         node<T>* new_node = new node<T>(data);
