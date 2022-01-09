@@ -40,10 +40,12 @@ class LockFreeStack
         while (old.head && !head.compare_exchange_weak (old_head, old_head -> next,
                                                         std::memory_order_relaese,
                                                         std::memory_order_relaxed));
-        bool result = old_head ? true : false;
+        if (!old_head){
+            return false;
+        }
         value = old_head -> data;
         delete old_head;
-        return result;
+        return true;
     }
 
 };
