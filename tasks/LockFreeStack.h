@@ -48,3 +48,38 @@ class LockFreeStack
     }
 
 };
+
+// Дальше идёт реализация из лекции Бородина
+
+  template <typename T>
+  struct LockFreeStack {
+    void Push(const T& value);
+    Node* Pop();
+
+    struct Node {
+      T data;
+      Node* next;
+   };
+  private:
+   std::atomic<Node*> head_;
+ };
+  void Push(const T& value) {
+      Node* new_head = new Node(value, head_.load());
+
+      while (
+
+        !head_.compare_exchange_weak(new_head->next, new_head)
+
+      ) { }
+  }
+  Node* Pop() {
+    Node* node = head_.load();
+
+    while (node &&
+
+      !head_.compare_exchange_weak(node, node->next)
+
+    ) { }
+
+   return node;
+ }
