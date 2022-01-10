@@ -81,5 +81,5 @@ class LockFreeStack
 
     ) { }
 
-   return node & true : false;
+   return node ? true : false;
  }
