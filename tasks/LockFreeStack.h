@@ -72,7 +72,7 @@ class LockFreeStack
 
       ) { }
   }
-  Node* Pop() {
+  bool Node* Pop() {
     Node* node = head_.load();
 
     while (node &&
@@ -81,5 +81,5 @@ class LockFreeStack
 
     ) { }
 
-   return node;
+   return node & true : false;
  }
