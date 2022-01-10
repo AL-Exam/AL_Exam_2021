@@ -26,7 +26,7 @@ class LockFreeStack
         // lhs на des только когда lhs и rhs побитово равны
     
     void Push(const T& data) {
-        node<T>* new_node = new node<T>(data);
+        Node<T>* new_node = new node<T>(data);
         new_node->next = head.load(std::memory_order_relaxed); 
         while (!head.compare_exchange_weak (new_node->next, new_node,
                                         std::memory_order_release,
@@ -34,8 +34,8 @@ class LockFreeStack
     }
     
     bool TryPop(T& value) {
-        Node* old_head = head.load(std::memory_order_relaxed);
-        while (old.head && !head.compare_exchange_weak (old_head, old_head -> next,
+        Node<T>* old_head = head.load(std::memory_order_relaxed);
+        while (old_head && !head.compare_exchange_weak (old_head, old_head -> next,
                                                         std::memory_order_relaese,
                                                         std::memory_order_relaxed));
         if (!old_head){
